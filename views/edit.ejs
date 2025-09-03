@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+   <div class="w-full min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white">
+    
+        <div class="w-full h-16 bg-zinc-800/80 backdrop-blur-md shadow-md flex items-center px-6">
+            <h1 class="text-white text-2xl font-extrabold tracking-wide">🚀 My App</h1>
+        </div>
+
+        
+        <div class="w-full max-w-4xl mx-auto mt-12 p-6 bg-zinc-800/70 rounded-2xl shadow-lg border border-zinc-700">
+            <h2 class="text-white text-2xl font-semibold mb-3">Welcome to My App</h2>
+            <p class="text-zinc-300 mb-6 leading-relaxed">
+                This is a simple application built with <span class="text-red-400 font-semibold">Node.js</span> and <span class="text-green-400 font-semibold">Express</span>.
+            </p>
+            <button class="bg-red-600 hover:bg-red-700 transition-colors px-6 py-3 rounded-xl shadow-md font-medium text-lg">
+                Get Started
+            </button>
+        </div>
+
+        <form action="/update/<%= post._id %>" method="post" 
+        
+            class="w-full max-w-md mx-auto mt-10 bg-zinc-800/70 p-6 rounded-2xl shadow-md border border-zinc-700 flex flex-col items-center gap-4">
+            
+            <textarea 
+                class="w-2/3 resize-none bg-transparent border-2 border-zinc-700 rounded-md p-2 text-white"
+                name="content"><%= post.content %></textarea>
+
+            <input class="px-3  py-2 bg-yellow-400 text-black rounded-md" type="submit" value="Update post">
+
+        </form>
+
+        
+</div>
+
+</body>
+
+</html>
