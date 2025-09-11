@@ -6,17 +6,30 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const bcrypt = require('bcrypt');
+const upload = require('./config/multerconfig');
 
 
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public'))); // to serve static files
 
 
 app.get('/', (req, res) => {
   res.render('index'); // view engine is setted so render
 });
+
+app.get('/profile/upload', (req, res) => {
+  res.render('profileupload'); // view engine is setted so render
+});
+
+app.post('/upload', upload.single('image'), (req, res) => {
+
+    // view engine is setted so render
+});
+
+
 
 //Login route is protected route
 app.get('/login', (req, res) => {
@@ -41,9 +54,6 @@ app.post('/post', isLoggedIn, async (req, res) => {
     res.redirect('/profile');
 });
 
-
-
-
 app.get('/like/:id',isLoggedIn, async (req, res) => {
 
     let post = await postModel.findOne({_id: req.params.id}).populate("user") // user feild in the post is an id and we will populate it to get the user details
@@ -61,7 +71,6 @@ app.get('/like/:id',isLoggedIn, async (req, res) => {
     
 });
 
-
 app.post('/update/:id',isLoggedIn, async (req, res) => {
 
     let post = await postModel.findOneAndUpdate({_id: req.params.id}, {content: req.body.content}) 
@@ -72,10 +81,6 @@ app.post('/update/:id',isLoggedIn, async (req, res) => {
     
 });
 
-
-
-
-
 app.get('/edit/:id', isLoggedIn, async (req, res) => {
     let post = await postModel.findOne({ _id: req.params.id.trim() });
     
@@ -85,7 +90,6 @@ app.get('/edit/:id', isLoggedIn, async (req, res) => {
 
     res.render('edit', { post });  // pass post to template
 });
-
 
 app.get('/profile',isLoggedIn, async (req, res) => {
     let user = await userModel.findOne({email: req.user.email}).populate('posts') // we have the email on the basis of which we can find the user
@@ -124,14 +128,12 @@ app.post('/login',async (req, res) => {
 
 });
 
-
 app.get('/logout', (req, res) => {
   
   res.clearCookie('token', '');
   res.redirect('/login');
   
 });
-
 
 app.post('/register', async (req, res) => {
   // now at the register route we will get the data from the form and then create the account
@@ -166,7 +168,6 @@ app.post('/register', async (req, res) => {
 });
 
 // protected route 
-
 // It is a check that whether the user is logged in or not
 function isLoggedIn(req, res, next){
     const token = req.cookies.token;
@@ -182,9 +183,6 @@ function isLoggedIn(req, res, next){
     }
 
 }
-
-
-
 
 // Now so far --->
 

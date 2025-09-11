@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 mongoose.connect('mongodb://localhost:27017/miniprojec');
 
 
@@ -9,6 +10,10 @@ const userSchema = mongoose.Schema({
     age: Number,
     email: String,
     password: String,
+    ProfilePic: {
+        type: String,
+        default: 'default.jpg'
+    },
     posts: [
             { type: mongoose.Schema.Types.ObjectId, 
                 ref: 'Post' }
